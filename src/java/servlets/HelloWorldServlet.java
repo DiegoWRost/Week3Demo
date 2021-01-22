@@ -22,12 +22,21 @@ public class HelloWorldServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        // Retrieve parameters
         String firstname = request.getParameter("firstname");
         String lastname = request.getParameter("lastname");
         
-        //Set attributes to be forwarded to the JSP
+        //Set attributes to be forwarded to the JSP and keep correct input if validation fails
         request.setAttribute("firstname", firstname);
         request.setAttribute("lastname", lastname);
+        
+        // Validation of parameters (Always check for null first)
+        if (firstname == null || firstname.equals("") | lastname == null || lastname.equals("")) {
+            // Send back to form
+            getServletContext().getRequestDispatcher("/WEB-INF/helloWorldForm.jsp")
+                .forward(request, response);
+            return; // Stop execution so the code does keep going and forward again
+        }
         
         // Use the dispatcher to forward the JSP
         getServletContext().getRequestDispatcher("/WEB-INF/sayHello.jsp")
