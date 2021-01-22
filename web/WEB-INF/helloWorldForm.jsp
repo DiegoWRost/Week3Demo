@@ -19,5 +19,6 @@
             Last name: <input type="text" name="lastname" value="${lastname}"><br>
             <input type="submit" value="Submit">
         </form>
+            <p>${message}</p>
     </body>
 </html>
